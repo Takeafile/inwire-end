@@ -17,3 +17,18 @@ test('basic', function(done)
   .on('end', done)
   .end(expected)
 })
+
+test('nested', function(done)
+{
+  expect.assertions(1)
+
+  const expected = 'asdf'
+
+  duplex(duplex(new PassThrough({objectMode: true})))
+  .on('data', function(data)
+  {
+    expect(data).toBe(expected)
+  })
+  .on('end', done)
+  .end(expected)
+})
